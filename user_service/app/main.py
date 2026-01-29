@@ -23,7 +23,7 @@ async def health():
 
 
 @app.get("/db_health")
-async def db_health(db: AsyncSession = Depends(get_db())):
+async def db_health(db: AsyncSession = Depends(get_db)):
     try:
         await db.execute(text("SELECT 1"))
         return {"status": "healthy", "database": "connected"}

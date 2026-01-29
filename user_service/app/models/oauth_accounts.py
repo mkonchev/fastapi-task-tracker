@@ -1,6 +1,6 @@
 from sqlalchemy.sql import text
 from sqlalchemy import Column, VARCHAR, TIMESTAMP
-from sqlalchemy import UUID, ForeignKey, JSON, TEXT
+from sqlalchemy import UUID, ForeignKey, TEXT
 from app.config.database import Base
 
 

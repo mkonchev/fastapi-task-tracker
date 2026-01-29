@@ -4,7 +4,7 @@ from app.config.database import Base
 
 
 class User(Base):
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id = Column(
         UUID(as_uuid=True),

@@ -14,8 +14,7 @@ class OAuthAccounts(Base):
     )
     user_id = Column(
         UUID,
-        ForeignKey('user.id'),
-        ondelete="CASCADE",
+        ForeignKey('users.id', ondelete="CASCADE"),
         index=True
     )
     provider = Column(VARCHAR(50), nullable=False, unique=True)

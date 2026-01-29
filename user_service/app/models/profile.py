@@ -5,14 +5,14 @@ from app.config.database import Base
 
 
 class Profile(Base):
-    __tablename__ = "profile"
+    __tablename__ = "profiles"
 
     id = Column(
         UUID(as_uuid=True),
         primary_key=True,
         server_default=text("gen_random_uuid()")
     )
-    user_id = Column(UUID, ForeignKey('user.id'), ondelete="CASCADE")
+    user_id = Column(UUID, ForeignKey('users.id', ondelete="CASCADE"))
     full_name = Column(VARCHAR(255))
     avatar_url = Column(TEXT)
     timezone = Column(VARCHAR(50), server_default="UTC")

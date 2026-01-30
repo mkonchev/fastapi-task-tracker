@@ -1,4 +1,5 @@
 from sqlalchemy.sql import func, text
+from sqlalchemy.orm import relationship
 from sqlalchemy import Column, VARCHAR, Boolean, DateTime, UUID
 from app.config.database import Base
 
@@ -18,3 +19,17 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now())
+
+    profile = relationship(
+        "profiles",
+        back_populates="users",
+        cascade="all, delete-orphan",
+        lazy="selectin"
+    )
+
+    oauth_accounts = relationship(
+        "oauth_accounts",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        lazy="selectin"
+    )

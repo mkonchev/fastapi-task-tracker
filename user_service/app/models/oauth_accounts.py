@@ -1,6 +1,7 @@
 from sqlalchemy.sql import text
+from sqlalchemy.orm import relationship
 from sqlalchemy import Column, VARCHAR, TIMESTAMP
-from sqlalchemy import UUID, ForeignKey, TEXT
+from sqlalchemy import UUID, ForeignKey, TEXT, UniqueConstraint
 from app.config.database import Base
 
 
@@ -17,8 +18,23 @@ class OAuthAccounts(Base):
         ForeignKey('users.id', ondelete="CASCADE"),
         index=True
     )
-    provider = Column(VARCHAR(50), nullable=False, unique=True)
-    provider_id = Column(VARCHAR(255), nullable=False, unique=True)
+    provider = Column(VARCHAR(50), nullable=False)
+    provider_id = Column(VARCHAR(255), nullable=False)
     access_token = Column(TEXT)
     refresh_token = Column(TEXT)
     expires_at = Column(TIMESTAMP)
+
+    user = relationship("user", back_populates="oauth_accounts")
+
+    __table_args__ = (
+        UniqueConstraint(
+            'provider',
+            'provider_id',
+            name='uq_provider_provider_id'
+        ),
+        UniqueConstraint(
+            'user_id',
+            'provider',
+            name='uq_user_provider'
+        ),
+    )

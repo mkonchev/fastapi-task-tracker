@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import select
 from datetime import datetime
 from app.schemas import user as schemas
 from app.models import users as models
@@ -45,7 +45,7 @@ class UserRepository:
             self,
             username: str,
             user_update: schemas.UserUpdate
-        ):
+    ):
         db_user = await self.get_user_by_username(username)
 
         if not db_user:
@@ -65,7 +65,7 @@ class UserRepository:
             self,
             id: str,
             user_update: schemas.UserUpdate
-        ):
+    ):
         db_user = await self.get_user_by_id(id)
 
         if not db_user:

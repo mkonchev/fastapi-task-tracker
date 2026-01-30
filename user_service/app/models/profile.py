@@ -1,4 +1,5 @@
 from sqlalchemy.sql import text
+from sqlalchemy.orm import relationship
 from sqlalchemy import Column, VARCHAR
 from sqlalchemy import UUID, ForeignKey, JSON, TEXT
 from app.config.database import Base
@@ -20,3 +21,5 @@ class Profile(Base):
         JSON,
         default='{"notifications": true, "theme": "light"}'
     )
+
+    user = relationship("users", back_populates="profile")

@@ -1,22 +1,25 @@
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
+from datetime import datetime
 
 
 class UserBase(BaseModel):
-    id: str = Field(...)
     email: EmailStr = Field(description="Mail")
     username: str = Field(description="Username")
-    is_active: bool = Field(description="Active")
-    is_verified: bool = Field(description="Verified")
+    is_active: bool = Field(description="Active", default=True)
+    is_verified: bool = Field(description="Verified", default=False)
 
 
 class UserCreate(UserBase):
-    pass
+    password: str = Field(description="Password")
 
 
-class UserResponce(UserBase):
-    created_at: str = Field(...)
-    updated_at: str = Field(...)
+class UserResponse(UserBase):
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 class UserUpdate(BaseModel):

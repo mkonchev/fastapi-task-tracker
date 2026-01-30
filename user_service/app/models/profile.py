@@ -22,4 +22,4 @@ class Profile(Base):
         default='{"notifications": true, "theme": "light"}'
     )
 
-    user = relationship("users", back_populates="profile")
+    user = relationship("User", back_populates="profile")

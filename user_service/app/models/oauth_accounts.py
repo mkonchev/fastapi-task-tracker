@@ -24,7 +24,7 @@ class OAuthAccounts(Base):
     refresh_token = Column(TEXT)
     expires_at = Column(TIMESTAMP)
 
-    user = relationship("user", back_populates="oauth_accounts")
+    user = relationship("User", back_populates="oauth_accounts")
 
     __table_args__ = (
         UniqueConstraint(

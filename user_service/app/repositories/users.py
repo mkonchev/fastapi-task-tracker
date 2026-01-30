@@ -2,7 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from datetime import datetime
 from app.schemas import user as schemas
-from app.models import users as models
+from app.models import user as models
+from app.core import security
 
 
 class UserRepository:
@@ -10,12 +11,14 @@ class UserRepository:
         self.db = db
 
     async def create_user(self, user: schemas.UserCreate):
+        hashed_password = security.get_password_hash(user.password)
+
         db_user = models.User(
-            id=user.id,
             email=user.email,
             username=user.username,
             is_active=user.is_active,
             is_verified=user.is_verified,
+            hashed_password=hashed_password,
         )
 
         self.db.add(db_user)

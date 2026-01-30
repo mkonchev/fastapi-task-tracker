@@ -3,6 +3,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from contextlib import asynccontextmanager
 from app.config.database import engine, Base, get_db
+from app.api.auth import router as router_auth
 
 
 @asynccontextmanager
@@ -15,6 +16,9 @@ async def lifespan(app: FastAPI):
     print("Database connection closed")
 
 app = FastAPI()
+
+
+app.include_router(router_auth)
 
 
 @app.get("/")

@@ -4,7 +4,7 @@ from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from app.config.database import Base, DATABASE_URL_DOCKER
-from app.models.users import User
+from app.models.user import User
 from app.models.profile import Profile
 from app.models.oauth_accounts import OAuthAccounts
 

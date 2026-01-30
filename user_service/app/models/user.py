@@ -1,6 +1,6 @@
 from sqlalchemy.sql import func, text
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, VARCHAR, Boolean, DateTime, UUID
+from sqlalchemy import Column, VARCHAR, Boolean, DateTime, UUID, String
 from app.config.database import Base
 
 
@@ -14,22 +14,12 @@ class User(Base):
     )
     email = Column(VARCHAR(255), unique=True, index=True, nullable=False)
     username = Column(VARCHAR(100), unique=True, index=True, nullable=False)
-    hashed_password = Column(VARCHAR(255))
+    hashed_password = Column(String(128))
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now())
 
-    profile = relationship(
-        "profiles",
-        back_populates="users",
-        cascade="all, delete-orphan",
-        lazy="selectin"
-    )
+    profile = relationship("Profile", back_populates="user")
 
-    oauth_accounts = relationship(
-        "oauth_accounts",
-        back_populates="user",
-        cascade="all, delete-orphan",
-        lazy="selectin"
-    )
+    oauth_accounts = relationship("OAuthAccounts", back_populates="user")

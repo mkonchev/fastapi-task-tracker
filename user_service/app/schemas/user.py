@@ -48,3 +48,8 @@ class UserUpdate(BaseModel):
     is_verified: Optional[bool] = Field(default=None, description="Verified")
     created_at: Optional[str] = Field(default=None)
     updated_at: str = Field(description="UPD time")
+
+
+class TokenCreate(BaseModel):
+    useranme: str
+    password: str

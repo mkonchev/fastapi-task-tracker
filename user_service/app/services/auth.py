@@ -1,11 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from jose import jwt, JWTError
-from datetime import datetime, timezone
-from fastapi import HTTPException, status, Response, Request, Depends
+from fastapi import HTTPException, status, Response, Request
 from app.repositories.users import UserRepository
 from app.schemas import user as schemas
 from app.core.security import verify_password, create_access_token
-from app.config.config import get_auth_data
 
 
 class AuthService:

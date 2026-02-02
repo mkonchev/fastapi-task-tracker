@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status, Response, Request
 from app.repositories.users import UserRepository
 from app.schemas import user as schemas
-from app.core.security import verify_password, create_access_token
+from app.core.security import verify_password, create_access_token, create_refresh_token
 
 
 class AuthService:
@@ -53,8 +53,19 @@ class AuthService:
             value=access_token,
             httponly=True
         )
-        return {'access_token': access_token, 'refresh_token': None}
+
+        refresh_token = create_refresh_token({"sub": str(user.id)})
+        response.set_cookie(
+            key="users_refresh_token",
+            value=access_token,
+            httponly=True
+        )
+        return {'access_token': access_token, 'refresh_token': refresh_token}
 
     async def logout_user(self, response: Response):
         response.delete_cookie(key="users_access_token")
+        response.delete_cookie(key="users_refresh_token")
         return {"message": "User logout successfully"}
+
+    async def refresh_token():
+        return {".": ""}

@@ -48,6 +48,15 @@ def create_refresh_token(data: dict):
     return encoded_jwt
 
 
+def get_exp_time(token: str):
+    decoded_token = jwt.decode(
+        token,
+        settings.SEKRET_KEY,
+        settings.ALGORITHM
+    )
+    return decoded_token['exp']
+
+
 def decode_token(token: str):
     decoded_token = jwt.decode(
         token,

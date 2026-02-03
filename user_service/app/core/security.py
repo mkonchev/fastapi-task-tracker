@@ -48,4 +48,13 @@ def create_refresh_token(data: dict):
     return encoded_jwt
 
 
+def decode_token(token: str):
+    decoded_token = jwt.decode(
+        token,
+        settings.SEKRET_KEY,
+        settings.ALGORITHM
+    )
+    return decoded_token
+
+
 # def verify_

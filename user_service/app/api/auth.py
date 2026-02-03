@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 # from app.core.security import get_password_hash
 from app.models.user import User
@@ -50,3 +50,18 @@ async def get_me(
 async def logout_user(response: Response, db: AsyncSession = Depends(get_db)):
     service = AuthService(db)
     return await service.logout_user(response)
+
+
+@router.post("/refresh")
+async def refreah_token(
+    response: Response,
+    request: Request,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    service = AuthService(db)
+    return await service.refresh_token(
+        response=response,
+        request=request,
+        user=user
+    )
